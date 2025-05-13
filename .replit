@@ -1,5 +1,5 @@
 language = "python3"
-run = "pip install \"pymongo[srv]\" dnspython && pip install -r requirements.txt && python app.py"
+run = "pip install requests pymongo[srv] dnspython flask python-dotenv && pip install -r requirements.txt && python app.py"
 modules = ["python-3.8", "web"]
 
 [env]
@@ -35,6 +35,7 @@ externalPort = 5000
 [[ports]]
 localPort = 8080
 externalPort = 80
+
 
 
 

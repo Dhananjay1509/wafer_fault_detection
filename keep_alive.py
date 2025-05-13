@@ -1,8 +1,16 @@
 from flask import Flask
 from threading import Thread
 import time
-import requests
 import os
+
+# Try to import requests, install if missing
+try:
+    import requests
+except ImportError:
+    import subprocess
+    print("Installing requests module...")
+    subprocess.check_call(["pip", "install", "requests"])
+    import requests
 
 app = Flask('')
 
@@ -11,7 +19,7 @@ def home():
     return "I'm alive"
 
 def run():
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8080)
 
 def keep_alive():
     t = Thread(target=run)
@@ -32,4 +40,5 @@ if __name__ == "__main__":
     keep_alive()
     ping_thread = Thread(target=ping_self)
     ping_thread.start()
+
 
