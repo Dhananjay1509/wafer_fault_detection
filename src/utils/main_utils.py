@@ -88,31 +88,44 @@ class MainUtils:
         Load a pickle file from the given path
         """
         try:
+            # Check if file exists
             if not os.path.exists(file_path):
                 logging.warning(f"File not found: {file_path}")
                 
-                # Check if this is a model or preprocessor file
-                if file_path.endswith("model.pkl") or file_path.endswith("preprocessor.pkl"):
-                    # Create dummy model and preprocessor
-                    logging.info("Creating dummy model and preprocessor")
-                    model_path, preprocessor_path = self.create_dummy_model_and_preprocessor()
-                    
-                    # Return the appropriate dummy object
-                    if file_path.endswith("model.pkl"):
-                        with open(model_path, 'rb') as file_obj:
-                            return pickle.load(file_obj)
-                    else:
-                        with open(preprocessor_path, 'rb') as file_obj:
-                            return pickle.load(file_obj)
+                # Create a dummy model if it's a model file
+                if file_path.endswith('model.pkl'):
+                    logging.info("Creating dummy model")
+                    return self.create_dummy_model()
+                
+                # Create a dummy preprocessor if it's a preprocessor file
+                elif file_path.endswith('preprocessor.pkl'):
+                    logging.info("Creating dummy preprocessor")
+                    return self.create_dummy_preprocessor()
+                
                 else:
                     raise FileNotFoundError(f"File not found: {file_path}")
             
+            # Load the file if it exists
             with open(file_path, 'rb') as file_obj:
                 return pickle.load(file_obj)
                 
         except Exception as e:
             logging.error(f"Error loading object from {file_path}: {str(e)}")
             raise CustomException(e, sys)
+        
+    def create_dummy_model(self):
+        """Create a simple dummy model for testing"""
+        from sklearn.dummy import DummyClassifier
+        model = DummyClassifier(strategy="most_frequent")
+        model.fit([[0, 0], [1, 1]], [0, 1])
+        return model
+    
+    def create_dummy_preprocessor(self):
+        """Create a simple dummy preprocessor for testing"""
+        from sklearn.preprocessing import StandardScaler
+        preprocessor = StandardScaler()
+        preprocessor.fit([[0, 0], [1, 1]])
+        return preprocessor
 
     @staticmethod
     def load_object(file_path: str) -> object:
@@ -137,6 +150,7 @@ class MainUtils:
         except Exception as e:
             logging.info('Exception Occured in load_object function utils')
             raise CustomException(e,sys)
+
 
 
 
