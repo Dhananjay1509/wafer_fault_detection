@@ -1,8 +1,10 @@
 import shutil
-import os,sys
+import os, sys
 import pandas as pd
 import pickle
 from src.logger import logging
+import glob
+from datetime import datetime
 
 from src.exception import CustomException
 import sys
@@ -17,9 +19,48 @@ from dataclasses import dataclass
 class PredictionPipelineConfig:
     prediction_output_dirname: str = "predictions"
     prediction_file_name:str =  "predicted_file.csv"
-    model_file_path: str = os.path.join(artifact_folder, "model.pkl" )
-    preprocessor_path: str = os.path.join(artifact_folder, "preprocessor.pkl")
-    prediction_file_path:str = os.path.join(prediction_output_dirname,prediction_file_name)
+    model_file_path: str = None  # Will be set dynamically
+    preprocessor_path: str = None  # Will be set dynamically
+    prediction_file_path:str = os.path.join(prediction_output_dirname, prediction_file_name)
+    
+    def __post_init__(self):
+        # Find the most recent model and preprocessor files
+        self.find_latest_model_files()
+    
+    def find_latest_model_files(self):
+        """Find the most recent model and preprocessor files in the artifacts directory"""
+        try:
+            # Look for all timestamp directories in the artifacts folder
+            artifact_dirs = glob.glob(os.path.join(artifact_folder, "*"))
+            
+            if not artifact_dirs:
+                logging.error(f"No artifact directories found in {artifact_folder}")
+                raise FileNotFoundError(f"No model directories found in {artifact_folder}")
+            
+            # Sort directories by timestamp (newest first)
+            artifact_dirs.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+            
+            # Find the newest directory that contains both model.pkl and preprocessor.pkl
+            for dir_path in artifact_dirs:
+                model_path = os.path.join(dir_path, "model.pkl")
+                preprocessor_path = os.path.join(dir_path, "preprocessor.pkl")
+                
+                if os.path.exists(model_path) and os.path.exists(preprocessor_path):
+                    self.model_file_path = model_path
+                    self.preprocessor_path = preprocessor_path
+                    logging.info(f"Found model at: {self.model_file_path}")
+                    logging.info(f"Found preprocessor at: {self.preprocessor_path}")
+                    return
+            
+            # If we get here, we didn't find valid model files
+            raise FileNotFoundError("No valid model and preprocessor files found in any artifact directory")
+            
+        except Exception as e:
+            logging.error(f"Error finding latest model files: {str(e)}")
+            # Fall back to the default paths
+            self.model_file_path = os.path.join(artifact_folder, "model.pkl")
+            self.preprocessor_path = os.path.join(artifact_folder, "preprocessor.pkl")
+            logging.warning(f"Using fallback model path: {self.model_file_path}")
 
 
 
@@ -133,3 +174,7 @@ class PredictionPipeline:
         
 
         
+
+
+
+
