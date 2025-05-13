@@ -1,0 +1,17 @@
+[33m4bb29de[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32mbackup-main[m[33m)[m Fix data ingestion pipeline and environment variable handling
+[33md5a24c7[m Assistant checkpoint: Update MongoDB connection configuration with SSL settings
+[33m4a4337f[m Checkpoint before assistant change: Improve application stability and fix connection issues with external database
+[33m645ff76[m Assistant checkpoint: Update MongoDB connection configuration
+[33m0b6f85d[m Checkpoint before assistant change: Address issue preventing model training due to missing software component
+[33m7c71d64[m Assistant checkpoint: Added SSL certificate verification to MongoDB connection
+[33m05dcf32[m Assistant checkpoint: Update MongoDB configuration and add error handling
+[33m6287649[m Checkpoint before assistant change: Address issues preventing the application from retrieving necessary data
+[33ma5f069d[m Assistant checkpoint: Add error handling and debug mode
+[33m7d66635[m Checkpoint before assistant change: Enable the application to run and be accessible on the standard web port
+[33m8b9f78e[m Assistant checkpoint: Add yaml package to requirements.txt
+[33m21e5197[m Checkpoint before assistant change: Add image to enhance the content and improve visual appeal of the platform
+[33mc95b819[m Assistant checkpoint: Updated Flask app configuration and workflow
+[33m85ebb2c[m Checkpoint before assistant change: Update the project to ensure it functions correctly with the latest changes
+[33m19daf57[m Update project for Replit deployment
+[33mb6117fb[m Update project for Replit deployment
+[33m706a4de[m Complete project update for Replit deployment

@@ -1,0 +1,40 @@
+src.exception.CustomException
+src.exception.CustomException: Error occurred python script name [/home/runner/workspace/app.py] line number [20] error message [Error occurred python script name [/home/runner/workspace/src/pipeline/train_pipeline.py] line number [53] error message [Error occurred python script name [/home/runner/workspace/src/pipeline/train_pipeline.py] line number [19] error message ['DataIngestion' object has no attribute 'initiate_data_ingestion']]]
+
+Traceback (most recent call last)
+File "/home/runner/workspace/src/pipeline/train_pipeline.py", line 19, in start_data_ingestion
+feature_store_file_path = data_ingestion.initiate_data_ingestion()
+During handling of the above exception, another exception occurred:
+File "/home/runner/workspace/src/pipeline/train_pipeline.py", line 53, in run_pipeline
+feature_store_file_path = self.start_data_ingestion()
+File "/home/runner/workspace/src/pipeline/train_pipeline.py", line 23, in start_data_ingestion
+raise CustomException(e,sys)
+During handling of the above exception, another exception occurred:
+File "/home/runner/workspace/app.py", line 20, in train_route
+train_pipeline.run_pipeline()
+File "/home/runner/workspace/src/pipeline/train_pipeline.py", line 61, in run_pipeline
+raise CustomException(e, sys)
+During handling of the above exception, another exception occurred:
+File "/home/runner/workspace/.pythonlibs/lib/python3.8/site-packages/flask/app.py", line 2088, in __call__
+return self.wsgi_app(environ, start_response)
+File "/home/runner/workspace/.pythonlibs/lib/python3.8/site-packages/flask/app.py", line 2073, in wsgi_app
+response = self.handle_exception(e)
+File "/home/runner/workspace/.pythonlibs/lib/python3.8/site-packages/flask/app.py", line 2070, in wsgi_app
+response = self.full_dispatch_request()
+File "/home/runner/workspace/.pythonlibs/lib/python3.8/site-packages/flask/app.py", line 1515, in full_dispatch_request
+rv = self.handle_user_exception(e)
+File "/home/runner/workspace/.pythonlibs/lib/python3.8/site-packages/flask/app.py", line 1513, in full_dispatch_request
+rv = self.dispatch_request()
+File "/home/runner/workspace/.pythonlibs/lib/python3.8/site-packages/flask/app.py", line 1499, in dispatch_request
+return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+File "/home/runner/workspace/app.py", line 23, in train_route
+raise CustomException(e, sys)
+src.exception.CustomException: Error occurred python script name [/home/runner/workspace/app.py] line number [20] error message [Error occurred python script name [/home/runner/workspace/src/pipeline/train_pipeline.py] line number [53] error message [Error occurred python script name [/home/runner/workspace/src/pipeline/train_pipeline.py] line number [19] error message ['DataIngestion' object has no attribute 'initiate_data_ingestion']]]
+The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+dump() shows all variables in the frame
+dump(obj) dumps all that's known about the object
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter.

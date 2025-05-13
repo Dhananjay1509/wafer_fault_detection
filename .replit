@@ -1,0 +1,40 @@
+language = "python3"
+run = "pip install \"pymongo[srv]\" dnspython && pip install -r requirements.txt && python app.py"
+modules = ["python-3.8", "web"]
+
+[env]
+PYTHONUNBUFFERED = "1"
+
+[deployment]
+run = ["sh", "-c", "python app.py"]
+
+[nix]
+channel = "stable-24_05"
+packages = ["cacert", "cairo", "ffmpeg-full", "freetype", "ghostscript", "glibcLocales", "gobject-introspection", "gtk3", "pkg-config", "qhull", "tcl", "tk"]
+
+[workflows]
+runButton = "Run Production"
+
+[[workflows.workflow]]
+name = "Run Production"
+author = 15588065
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "pip install -r requirements.txt"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python app.py"
+
+[[ports]]
+localPort = 5000
+externalPort = 5000
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+
+

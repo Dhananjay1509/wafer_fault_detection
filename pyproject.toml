@@ -1,0 +1,32 @@
+
+[tool.poetry]
+name = "wafer-fault-detection"
+version = "0.0.1"
+description = "A wafer fault detection system using machine learning"
+authors = ["DHANANJAY NERKAR <nerkarr.dhananjay@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+certifi = "2022.12.7"
+charset-normalizer = "3.4.2"
+click = "8.1.3"
+colorama = "0.4.6"
+cycler = "0.12.1"
+dnspython = "2.2.1"
+Flask = "2.0.1"
+fonttools = "4.57.0"
+gunicorn = "20.1.0"
+imbalanced-learn = "0.10.1"
+imblearn = "0.0"
+matplotlib = "3.5.3"
+numpy = "1.24.3"
+pandas = "1.5.3"
+scikit-learn = "1.2.2"
+seaborn = "0.12.2"
+xgboost = "1.7.5"
+python-dotenv = "0.21.0"
+pymongo = "4.2.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

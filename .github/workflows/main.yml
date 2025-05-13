@@ -1,0 +1,22 @@
+name: Deploy to Replit
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  sync-to-replit:
+    name: Sync to Replit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Push to Replit
+        uses: wei/git-sync@v3
+        with:
+          source_repo: "https://github.com/Dhananjay1509/wafer_fault_detection.git"
+          source_branch: "main"
+          destination_repo: "https://github.com/Dhananjay1509/wafer_fault_detection_replit.git"
+          destination_branch: "main"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

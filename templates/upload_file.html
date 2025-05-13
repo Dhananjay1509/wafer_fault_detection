@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CSV for Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload CSV File for Prediction</h1>
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Select CSV file with wafer sensor data:</label>
+                <input type="file" name="file" id="file" accept=".csv" required>
+            </div>
+            <button type="submit" class="btn">Submit for Prediction</button>
+        </form>
+        <p>
+            <a href="/">Back to Home</a>
+        </p>
+    </div>
+</body>
+</html>
+
