@@ -21,6 +21,21 @@ class DataIngestion:
         try:
             logging.info(f"Exporting MongoDB collection: {collection_name} from database: {database_name}")
             
+            # Check if MongoDB should be used
+            if not USE_MONGODB:
+                logging.warning("MongoDB is disabled. Using sample data instead.")
+                # Return sample data or load from a local CSV
+                import pandas as pd
+                import numpy as np
+                
+                # Create a simple sample dataset
+                sample_size = 100
+                columns = [f"sensor_{i}" for i in range(10)]
+                data = np.random.randn(sample_size, len(columns))
+                df = pd.DataFrame(data, columns=columns)
+                df['quality'] = np.random.choice([0, 1], size=sample_size)
+                return df
+            
             # Connect to MongoDB with more flexible SSL settings
             try:
                 # Try with certifi first
@@ -32,13 +47,19 @@ class DataIngestion:
                     ssl=True,
                     ssl_cert_reqs='CERT_NONE'  # Less strict SSL verification
                 )
-            except ImportError:
-                # If certifi is not available, try with SSL disabled
-                mongo_client = MongoClient(
-                    MONGO_DB_URL,
-                    ssl=True,
-                    ssl_cert_reqs='CERT_NONE'  # Less strict SSL verification
-                )
+            except Exception as e:
+                logging.error(f"MongoDB connection failed: {str(e)}")
+                # Return sample data as fallback
+                import pandas as pd
+                import numpy as np
+                
+                # Create a simple sample dataset
+                sample_size = 100
+                columns = [f"sensor_{i}" for i in range(10)]
+                data = np.random.randn(sample_size, len(columns))
+                df = pd.DataFrame(data, columns=columns)
+                df['quality'] = np.random.choice([0, 1], size=sample_size)
+                return df
             
             # Test connection
             mongo_client.admin.command('ping')
@@ -155,5 +176,6 @@ class DataIngestion:
         
         logging.info(f"Dummy dataset created with shape: {df.shape}")
         return df
+
 
 

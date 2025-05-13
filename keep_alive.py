@@ -28,17 +28,37 @@ def keep_alive():
 def ping_self():
     while True:
         try:
-            # Get your Replit URL from environment or use a default format
-            replit_url = os.environ.get('REPLIT_URL', f"https://{os.environ.get('REPL_SLUG', 'your-repl')}.{os.environ.get('REPL_OWNER', 'your-username')}.repl.co")
-            requests.get(replit_url)
-            print(f"Pinged {replit_url}")
+            # For Replit, construct URL based on environment variables
+            if os.environ.get('REPL_ID'):
+                # Get the actual Replit URL from the environment
+                repl_id = os.environ.get('REPL_ID')
+                repl_slug = os.environ.get('REPL_SLUG', 'wafer-fault-detection')
+                repl_owner = os.environ.get('REPL_OWNER', 'dhananjaypatil1')
+                
+                # Use the correct format for Replit URLs
+                replit_url = f"https://{repl_slug}.{repl_owner}.repl.co/healthz"
+                print(f"Attempting to ping {replit_url}")
+                
+                response = requests.get(replit_url, timeout=10)
+                print(f"Pinged {replit_url} - Status: {response.status_code}")
+            else:
+                # For local development
+                local_url = "http://localhost:5000/healthz"
+                response = requests.get(local_url, timeout=5)
+                print(f"Pinged {local_url} - Status: {response.status_code}")
         except Exception as e:
             print(f"Ping failed: {str(e)}")
+        
+        # Sleep for 5 minutes before next ping
         time.sleep(300)  # Ping every 5 minutes
 
 if __name__ == "__main__":
     keep_alive()
     ping_thread = Thread(target=ping_self)
     ping_thread.start()
+
+
+
+
 
 
