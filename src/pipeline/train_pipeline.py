@@ -52,3 +52,7 @@ class TraininingPipeline:
             raise CustomException(e, sys)
 
 
+# Ensure artifacts directory exists
+os.makedirs("artifacts", exist_ok=True)
+
+

@@ -46,11 +46,27 @@ def health_check():
 
 if __name__ == "__main__":
     try:
+        # Import and start keep_alive to prevent Replit from sleeping
+        from keep_alive import keep_alive, ping_self
+        from threading import Thread
+        
+        # Start the keep_alive server
+        keep_alive()
+        
+        # Start the ping thread
+        ping_thread = Thread(target=ping_self)
+        ping_thread.daemon = True  # Allow the thread to exit when main program exits
+        ping_thread.start()
+        
+        # Get port from environment variable or use default
         port = int(os.environ.get("PORT", 5000))
         lg.info(f"Starting server on port {port}")
-        app.run(host='0.0.0.0', port=port, debug=True)
+        
+        # Run the Flask app
+        app.run(host='0.0.0.0', port=port, debug=False)
     except Exception as e:
         lg.error(f"Failed to start server: {str(e)}")
         raise CustomException(e, sys)
+
 
 
