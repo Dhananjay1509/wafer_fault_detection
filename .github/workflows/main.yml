@@ -17,5 +17,5 @@ jobs:
         with:
           source_repo: "https://github.com/Dhananjay1509/wafer_fault_detection.git"
           source_branch: "main"
-          destination_repo: "https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/Dhananjay1509/wafer_fault_detection_replit.git"
+          destination_repo: "https://x-access-token:${{ secrets.GH_TOKEN }}@https://replit.com/@DhananjayPatil1/waferfaultdetection-1"
           destination_branch: "main"
